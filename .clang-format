@@ -1,8 +1,32 @@
-BasedOnStyle: LLVM
-IndentWidth: 4
-
 ---
 Language: Cpp
 Standard: c++17
-IndentAccessModifiers: false
-AccessModifierOffset: -2
+
+BasedOnStyle: LLVM
+IndentWidth: 4
+
+ColumnLimit: 100
+NamespaceIndentation: All
+MaxEmptyLinesToKeep: 1
+FixNamespaceComments: false
+
+# Function declarations:
+BinPackParameters: false
+AllowShortFunctionsOnASingleLine: Inline
+AlwaysBreakTemplateDeclarations: Yes
+
+
+# T& x, not T &x:
+DerivePointerAlignment: false
+PointerAlignment: Left
+
+# Other:
+
+AlignEscapedNewlines: Left
+BreakBeforeTernaryOperators: false
+ConstructorInitializerIndentWidth: 0
+SortUsingDeclarations: false
+IndentCaseLabels: true
+IndentPPDirectives: AfterHash
+
+...
