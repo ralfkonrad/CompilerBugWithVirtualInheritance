@@ -1,0 +1,8 @@
+BasedOnStyle: LLVM
+IndentWidth: 4
+
+---
+Language: Cpp
+Standard: c++17
+IndentAccessModifiers: false
+AccessModifierOffset: -2
