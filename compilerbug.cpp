@@ -1,51 +1,49 @@
-//
-// Created by ralf.eckel on 24.01.2023.
-//
-
 #include <exception>
-#include <iostream>
 #include <memory>
 
 class Abstract {
   public:
-    explicit Abstract() : a_(0) {}
-    Abstract(const Abstract&) {}
-    Abstract& operator=(const Abstract&) { return *this; }
     virtual ~Abstract() = default;
-
-    void increaseA() { a_++; }
-    int a() { return a_; }
-
-  private:
-    int a_;
 };
 
-class Parent : public virtual Abstract {
-  public:
-    explicit Parent(int p) : p_(p) {}
+class Parent : public virtual Abstract {};
 
-    int p() { return p_; }
+class ChildWithNoProblem : public Parent {
+  public:
+    ChildWithNoProblem() = default;
+    explicit ChildWithNoProblem(const std::shared_ptr<Parent>& parent)
+    : ChildWithNoProblem(*makeChild(parent)) {}
 
   private:
-    int p_;
-};
-
-class Child : public Parent {
-  public:
-    explicit Child(int p) : Parent(p) {}
-    explicit Child(const std::shared_ptr<Parent>& parent) : Child(makeChild(parent)) {}
-
-  private:
-    static Child makeChild(const std::shared_ptr<Parent>& parent) {
-        auto child = std::dynamic_pointer_cast<Child>(parent);
+    static std::shared_ptr<ChildWithNoProblem> makeChild(const std::shared_ptr<Parent>& parent) {
+        auto child = std::dynamic_pointer_cast<ChildWithNoProblem>(parent);
         if (child == nullptr) {
             throw std::exception("No child given");
         }
-        return Child(child->p());
+        return std::make_shared<ChildWithNoProblem>();
+    }
+};
+
+class ChildWithProblem : public Parent {
+  public:
+    ChildWithProblem() = default;
+    explicit ChildWithProblem(const std::shared_ptr<Parent>& parent)
+    : ChildWithProblem(makeChild(parent)) {}
+
+  private:
+    static ChildWithProblem makeChild(const std::shared_ptr<Parent>& parent) {
+        auto child = std::dynamic_pointer_cast<ChildWithProblem>(parent);
+        if (child == nullptr) {
+            throw std::exception("No child given");
+        }
+        return {};
     }
 };
 
 int main() {
-    auto child = std::make_shared<Child>(42);
-    auto copiedChild = Child(child);
+    auto childWithNoProblem = std::make_shared<ChildWithNoProblem>();
+    auto copiedChildWithNoProblem = ChildWithNoProblem(childWithNoProblem);
+
+    auto childWithProblem = std::make_shared<ChildWithProblem>();
+    auto copiedChildWithProblem = ChildWithProblem(childWithProblem);
 }

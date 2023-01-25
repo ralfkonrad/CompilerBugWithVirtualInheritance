@@ -1,6 +1,6 @@
 ---
 Language: Cpp
-Standard: c++17
+Standard: c++14
 
 BasedOnStyle: LLVM
 IndentWidth: 4
