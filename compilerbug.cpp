@@ -16,7 +16,9 @@ class ChildWithNoProblem : public Parent {
 
   private:
     static std::shared_ptr<ChildWithNoProblem> makeChild(const std::shared_ptr<Parent>& parent) {
+        std::cout << "\t Casting ChildWithNoProblem..." << std::endl;
         auto child = std::dynamic_pointer_cast<ChildWithNoProblem>(parent);
+        std::cout << "\t Done..." << std::endl;
         return std::make_shared<ChildWithNoProblem>();
     }
 };
@@ -29,7 +31,9 @@ class ChildWithProblem : public Parent {
 
   private:
     static ChildWithProblem makeChild(const std::shared_ptr<Parent>& parent) {
+        std::cout << "\t Casting ChildWithProblem..." << std::endl;
         auto child = std::dynamic_pointer_cast<ChildWithProblem>(parent);
+        std::cout << "\t Done..." << std::endl;
         return {};
     }
 };
