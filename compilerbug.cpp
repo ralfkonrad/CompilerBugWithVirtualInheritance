@@ -1,4 +1,4 @@
-#include <exception>
+#include <iostream>
 #include <memory>
 
 class Abstract {
@@ -17,10 +17,7 @@ class ChildWithNoProblem : public Parent {
   private:
     static std::shared_ptr<ChildWithNoProblem> makeChild(const std::shared_ptr<Parent>& parent) {
         auto child = std::dynamic_pointer_cast<ChildWithNoProblem>(parent);
-        if (child == nullptr) {
-            throw std::exception("No child given");
-        }
-        return std::make_shared<ChildWithNoProblem>();
+        return {};
     }
 };
 
@@ -33,17 +30,21 @@ class ChildWithProblem : public Parent {
   private:
     static ChildWithProblem makeChild(const std::shared_ptr<Parent>& parent) {
         auto child = std::dynamic_pointer_cast<ChildWithProblem>(parent);
-        if (child == nullptr) {
-            throw std::exception("No child given");
-        }
         return {};
     }
 };
 
 int main() {
-    auto childWithNoProblem = std::make_shared<ChildWithNoProblem>();
-    auto copiedChildWithNoProblem = ChildWithNoProblem(childWithNoProblem);
+    try {
+        std::cout << "Running ChildWithNoProblem..." << std::endl;
+        auto childWithNoProblem = std::make_shared<ChildWithNoProblem>();
+        auto copiedChildWithNoProblem = ChildWithNoProblem(childWithNoProblem);
 
-    auto childWithProblem = std::make_shared<ChildWithProblem>();
-    auto copiedChildWithProblem = ChildWithProblem(childWithProblem);
+        std::cout << "Running ChildWithProblem..." << std::endl;
+        auto childWithProblem = std::make_shared<ChildWithProblem>();
+        auto copiedChildWithProblem = ChildWithProblem(childWithProblem);
+    } catch (...) {
+        std::cout << "We have an error..." << std::endl;
+    }
+    std::cout << "We never get here..." << std::endl;
 }
