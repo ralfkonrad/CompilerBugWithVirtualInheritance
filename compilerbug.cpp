@@ -30,7 +30,7 @@ class ChildWithProblem : public Parent {
   private:
     static ChildWithProblem makeChild(const std::shared_ptr<Parent>& parent) {
         auto child = std::dynamic_pointer_cast<ChildWithProblem>(parent);
-        return ChildWithProblem();
+        return {};
     }
 };
 
