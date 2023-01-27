@@ -13,7 +13,7 @@ jobs:
       matrix:
         build-type: [ Release, Debug ]
         cxx-standard: [ 11, 14, 17, 20 ]
-        os: [ ubuntu-latest, windows-2019, windwos-2022 ]
+        os: [ ubuntu-latest, windows-2019, windows-2022 ]
         include:
           - os: ubuntu-latest
             setup: |
@@ -36,7 +36,7 @@ jobs:
 
       - name: Configure CMake
         run: |
-          cmake -GNinja -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{ matrix.build-type }} -DCMAKE_CXX_STANDARD=${{ matrix.cxx-standard }}
+          cmake -G Ninja -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{ matrix.build-type }} -DCMAKE_CXX_STANDARD=${{ matrix.cxx-standard }}
 
       - name: Build
         run: |
