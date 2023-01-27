@@ -6,10 +6,6 @@ on:
   pull_request:
     branches: [ "master" ]
 
-#env:
-  ## Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
-  # BUILD_TYPE: Release
-
 jobs:
   build:
     strategy:
@@ -17,23 +13,31 @@ jobs:
       matrix:
         build-type: [ Release, Debug ]
         cxx-standard: [ 11, 14, 17, 20 ]
-        os: [ ubuntu-latest, windows-2019, windwos-2022 ]
+        #os: [ ubuntu-latest, windows-2019, windwos-2022 ]
+        include:
+          - os: ubuntu-latest
+            setup: |
+              sudo apt update
+              sudo apt install ninja-build
 
     runs-on: ${{ matrix.os }}
 
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Configure CMake
-      run: |
-        cmake -GNinja -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{ matrix.build-type }} -DCMAKE_CXX_STANDARD=${{ matrix.cxx-standard }}
+      - name: Setup
+        run: ${{ matrix.setup }}
 
-    - name: Build
-      run: |
-        cmake --build ${{github.workspace}}/build --config ${{ matrix.build-type }} -v
+      - name: Configure CMake
+        run: |
+          cmake -GNinja -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{ matrix.build-type }} -DCMAKE_CXX_STANDARD=${{ matrix.cxx-standard }}
 
-    - name: Test
-      working-directory: ${{github.workspace}}/build
-      run: |
-        ctest --extra-verbose
+      - name: Build
+        run: |
+          cmake --build ${{github.workspace}}/build --config ${{ matrix.build-type }} -v
+
+      - name: Test
+        working-directory: ${{github.workspace}}/build
+        run: |
+          ctest --extra-verbose
 
