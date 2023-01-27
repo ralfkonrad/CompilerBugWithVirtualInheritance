@@ -16,5 +16,5 @@ else()
     target_compile_options(compilerbug PRIVATE -Wall -Wextra -Wpedantic)
 endif()
 
-add_test(NAME compilerbug COMMAND compilerbug)
+add_test(NAME testcompilerbug COMMAND compilerbug)
 enable_testing()
