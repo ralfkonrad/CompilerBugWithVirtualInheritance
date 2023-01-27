@@ -1,6 +1,11 @@
 cmake_minimum_required(VERSION 3.15.0)
 project(CompilerBugWithVirtualInheritance)
-set(CMAKE_CXX_STANDARD 14)
+
+if (NOT DEFINED CMAKE_CXX_STANDARD)
+    set(CMAKE_CXX_STANDARD 14)
+
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS FALSE)
 
 add_executable(compilerbug compilerbug.cpp)
 
