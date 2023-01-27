@@ -16,7 +16,8 @@ jobs:
       fail-fast: false
       matrix:
         build-type: [ Release, Debug ]
-        os: [ubuntu-latest, windows-2019, windwos-2022]
+        #os: [ ubuntu-latest, windows-2019, windwos-2022 ]
+        os: [ windwos-2022 ]
   
     runs-on: ${{ matrix.os }}
 
@@ -31,5 +32,5 @@ jobs:
 
     - name: Test
       working-directory: ${{github.workspace}}/build
-      run: ./compilerbug
+      run: compilerbug
 
