@@ -19,6 +19,12 @@ jobs:
             setup: |
               sudo apt update
               sudo apt install ninja-build
+          - os: windows-2019
+            setup: |
+              choco install -y ninja
+          - os: windows-2022
+            setup: |
+              choco install -y ninja
 
     runs-on: ${{ matrix.os }}
 
