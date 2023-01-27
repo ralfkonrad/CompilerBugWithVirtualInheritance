@@ -18,7 +18,7 @@ jobs:
         build-type: [ Release, Debug ]
         cxx-standard: [ 11, 14, 17, 20 ]
         #os: [ ubuntu-latest, windows-2019, windwos-2022 ]
-        #os: [ windwos-2019 ]
+        os: [ ubuntu-latest ]
   
     runs-on: ${{ matrix.os }}
 
