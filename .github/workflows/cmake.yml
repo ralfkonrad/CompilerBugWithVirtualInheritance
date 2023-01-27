@@ -13,7 +13,7 @@ jobs:
       matrix:
         build-type: [ Release, Debug ]
         cxx-standard: [ 11, 14, 17, 20 ]
-        #os: [ ubuntu-latest, windows-2019, windwos-2022 ]
+        os: [ ubuntu-latest, windows-2019, windwos-2022 ]
         include:
           - os: ubuntu-latest
             setup: |
