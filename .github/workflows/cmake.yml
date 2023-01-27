@@ -48,5 +48,5 @@ jobs:
       - name: Test
         working-directory: ${{github.workspace}}/build
         run: |
-          ctest --config ${{ matrix.build-type }} --extra-verbose 
+          ctest -C ${{ matrix.build-type }} --extra-verbose 
 
