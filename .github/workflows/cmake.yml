@@ -16,13 +16,18 @@ jobs:
         os: [ ubuntu-latest, windows-2019, windows-2022 ]
         include:
           - os: ubuntu-latest
+            generator: -G Ninja
             setup: |
               sudo apt update
               sudo apt install ninja-build
+
           - os: windows-2019
+            generator: -G "Visual Studio 16 2019" -A x64
             setup: |
               choco install -y ninja
+
           - os: windows-2022
+            generator: -G "Visual Studio 17 2022" -A x64
             setup: |
               choco install -y ninja
 
@@ -36,7 +41,7 @@ jobs:
 
       - name: Configure CMake
         run: |
-          cmake -G Ninja -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{ matrix.build-type }} -DCMAKE_CXX_STANDARD=${{ matrix.cxx-standard }}
+          cmake ${{ matrix.generator }} -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{ matrix.build-type }} -DCMAKE_CXX_STANDARD=${{ matrix.cxx-standard }}
 
       - name: Build
         run: |

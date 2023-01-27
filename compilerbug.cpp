@@ -50,5 +50,4 @@ int main() {
     } catch (...) {
         std::cout << "We have an error..." << std::endl;
     }
-    std::cout << "We never get here..." << std::endl;
 }
