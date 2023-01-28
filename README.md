@@ -1,4 +1,11 @@
-# Visual Studio 2022 Segmentation Fault with Virtual Inheritance in `-std:c++11` anc `-std:c++14`
+# Visual Studio 2022 Segmentation Fault with Virtual Inheritance in `-std:c++11` and `-std:c++14`
+
+---
+
+_This contains the source code for issue 
+https://developercommunity.visualstudio.com/t/Visual-Studio-2022-Segmentation-Fault-wi/10263539_
+
+---
 
 Using the code underneath causes a segmentation fault with `-std:c++11` and `-std:c++14` but not with `-std:c++17`
 and `-std:c++20`.
@@ -6,8 +13,8 @@ and `-std:c++20`.
 The essential part is the `virtual` inheritance here `class Parent : public virtual Abstract {};` and the call of the
 constructor `explicit ChildWithProblem(const std::shared_ptr<Parent>& parent)`.
 
-The code is taken from https://github.com/ralfkonrad/CompilerBugWithVirtualInheritance where it is also tested
-against `ubuntu-latest` `gcc` compiler without warnings and errors and also VS 2019 (same behaviour as VS 2022).
+It is also tested against `ubuntu-latest` `gcc` compiler without warnings and errors
+and also VS 2019 (same behaviour as VS 2022).
 
 ```c++
 #include <iostream>
