@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ ubuntu-latest, windows-2019, windows-2022 ]
+        os: [ windows-2022, windows-2019, ubuntu-latest  ]
         build-type: [ Release, Debug ]
         cxx-standard: [ 11, 14, 17, 20 ]
         warning-as-errors: [ OFF, ON ]
