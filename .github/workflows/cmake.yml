@@ -11,10 +11,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ windows-2022, windows-2019, ubuntu-latest  ]
+        os: [ windows-2022, windows-2019, ubuntu-latest ]
         build-type: [ Release, Debug ]
         cxx-standard: [ 11, 14, 17, 20 ]
         warning-as-errors: [ OFF, ON ]
+
         include:
           - os: ubuntu-latest
             generator: -G Ninja
