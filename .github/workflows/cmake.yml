@@ -11,9 +11,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        os: [ ubuntu-latest, windows-2019, windows-2022 ]
         build-type: [ Release, Debug ]
         cxx-standard: [ 11, 14, 17, 20 ]
-        os: [ ubuntu-latest, windows-2019, windows-2022 ]
+        warning-as-errors: [ OFF, ON ]
         include:
           - os: ubuntu-latest
             generator: -G Ninja
@@ -32,14 +33,14 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-      - uses: actions/checkout@v3
-
       - name: Setup
         run: ${{ matrix.setup }}
 
+      - uses: actions/checkout@v3
+
       - name: Configure CMake
         run: |
-          cmake ${{ matrix.generator }} -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{ matrix.build-type }} -DCMAKE_CXX_STANDARD=${{ matrix.cxx-standard }}
+          cmake ${{ matrix.generator }} -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{ matrix.build-type }} -DCMAKE_CXX_STANDARD=${{ matrix.cxx-standard }} -DWARNING_AS_ERROR=${{ matrix.warning-as-errors }}
 
       - name: Build
         run: |
@@ -49,4 +50,3 @@ jobs:
         working-directory: ${{github.workspace}}/build
         run: |
           ctest -C ${{ matrix.build-type }} --extra-verbose 
-
